@@ -1,0 +1,23 @@
+linked_files="`find . -lname \*$1`"
+file_names="`ls * -l | grep ^l | grep -v :$ | grep .*$1 | awk '{print $11}'`"
+
+mv $1 $2
+let out_count=1
+for link in $linked_files
+do
+	let in_count=1
+	for file in $file_names
+	do
+		if (( in_count == out_count ))
+		then
+			file2="`echo $file | sed s/$1/$2/g`"
+			rm $link
+			ln -s $file2 $link
+		fi
+		let in_count=in_count+1
+	done
+	
+	let out_count=out_count+1
+done
+
+exit 0

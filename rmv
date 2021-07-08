@@ -1,0 +1,7 @@
+linkedfiles="`find . -lname \*$1`"
+rm $1
+for link in $linkedfiles
+do
+	mv $link ~/blinking_dev_directory/removed_files_4links.bak
+done
+exit 0
